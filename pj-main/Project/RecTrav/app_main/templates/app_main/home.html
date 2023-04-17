@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Welcome</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+</style>
+</head>
+<body>
+  
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-blue w3-card w3-left-align w3-large">
+    {% if user.is_authenticated %}
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>   
+    <a href="{% url 'places' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Places</a>
+    <a href="{% url 'rec' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Reccommendation</a>
+    <a href="/logout_user" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Logout</a>
+    
+    {% else %} 
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+    <a href="{% url 'register' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Register</a>
+    <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Login</a>
+    <a href="{% url 'places' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Places</a>
+    <a href="{% url 'rec' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Reccommendation</a>
+    {% endif %}
+  </div>
+  
+
+</div>
+
+<!-- Header -->
+<header class="" style="padding:128px 16px;color:rgb(16, 175, 243);background-image:url('https://img.freepik.com/premium-photo/banner-summer-background-with-white-sand-seashell-starfish-beach_100655-31.jpg?w=2000');">
+  <h1 class="w3-margin w3-jumbo">Welcome to Sightseeing Website</h1>
+  
+  <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top"><a href="{% url 'places' %}">เริ่มดูสถานที่</a></button>
+  
+</header>
+
+<main class="container">
+ {% if user.is_authenticated %}
+ <h1 style="text-align:center ;"> hi {{ user.username }} </h1>
+ {% endif %}
+  <div style="display: flex;justify-content: space-around;margin-top : 15px">
+    
+    {% for place in places %}
+    <div>
+      <img src="{% static place.p_image %}"width="300" 
+      height="300">
+      <h4><a href="{% url 'place' place.id %}">{{place.p_name}}</a></h4>
+    </div>
+  
+  
+    {% endfor %}
+  </div> 
+ 
+
+</main>
+
+</body>
+</html>
